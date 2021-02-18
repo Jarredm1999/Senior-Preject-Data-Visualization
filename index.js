@@ -1,3 +1,7 @@
+//If you are trying to run this code you need to run a python server. 
+//If you do not you will get an error saying "Fetch API cannot load...URL
+//scheme must be http or https for CORS request".
+
 document.addEventListener('DOMContentLoaded', function(e) {
      
     let TEST_DATA;
