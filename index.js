@@ -5,26 +5,30 @@
 document.addEventListener('DOMContentLoaded', function(e) {
      
     let TEST_DATA;
+    let NEXT_DATA;
 
     fetch("test.json")
     .then(response => response.json())
     .then(data => { 
-        console.log(data.data)
+        console.log("1st dataset");
+        console.log(data.data);
+        console.log("2nd dataset");
+        console.log(data.nextdata);
         TEST_DATA = JSON.parse(JSON.stringify(data.data));
         console.log(TEST_DATA);
+        NEXT_DATA = JSON.parse(JSON.stringify(data.nextdata));
+        console.log(NEXT_DATA);
 
     const MARGINS = {top: 20, bottom: 10};
     const CHART_WIDTH = 600;
     const CHART_HEIGHT = 400 - MARGINS.top - MARGINS.bottom;
-
-    let selectedData = TEST_DATA;
 
     const x = d3.scaleBand().rangeRound([0, CHART_WIDTH]).padding(0.1);
     const y = d3.scaleLinear().range([CHART_HEIGHT, 0]);
 
     const chartContainer = d3.select('svg')
         .attr('width', CHART_WIDTH)
-        .attr('height', CHART_HEIGHT + MARGINS.top + MARGINS.bottom);
+        .attr('height', (CHART_HEIGHT + MARGINS.top + MARGINS.bottom));
 
     x.domain(TEST_DATA.map((d) => d.region));
     y.domain([0, d3.max(TEST_DATA, d => d.value) + 3]);
@@ -37,10 +41,8 @@ document.addEventListener('DOMContentLoaded', function(e) {
          .attr('transform', `translate(0, ${CHART_HEIGHT})`)
          .attr('color', '#000000');
 
-
-    function renderChart() {
         chart.selectAll('.bar')
-         .data(selectedData, data => data.id)
+         .data(TEST_DATA, data => data.id)
          .enter()
          .append('rect')
          .classed('bar', true)
@@ -49,10 +51,8 @@ document.addEventListener('DOMContentLoaded', function(e) {
          .attr('x', (data) => x(data.region))
          .attr('y', (data) => y(data.value));
 
-        chart.selectAll('.bar').data(selectedData, data => data.id).exit().remove();
-
         chart.selectAll('.label')
-            .data(selectedData, data => data.id)
+            .data(TEST_DATA, data => data.id)
             .enter()
             .append('text')
             .text(data => data.value)
@@ -61,39 +61,49 @@ document.addEventListener('DOMContentLoaded', function(e) {
             .attr('text-anchor', 'middle')
             .classed('label', true);
 
-        chart.selectAll('.label').data(selectedData, data => data.id).exit().remove();
-    }
+    const x2 = d3.scaleBand().rangeRound([0, CHART_WIDTH]).padding(0.1);
+    const y2 = d3.scaleLinear().range([CHART_HEIGHT, 0]);
 
-    renderChart();
+    const chartContainer2 = d3.select('#chart2')
+        .append('svg')
+        .attr('width', CHART_WIDTH)
+        .attr('height', (CHART_HEIGHT + MARGINS.top + MARGINS.bottom));
 
-    let unselectedIds = [];
+    x2.domain(NEXT_DATA.map((d) => d.region));
+    y2.domain([0, d3.max(NEXT_DATA, d => d.value) + 3]);
 
-    const listItems = d3.select('#data')
-                        .select('ul')
-                        .selectAll('li')
-                        .data(TEST_DATA)
-                        .enter()
-                        .append('li');
+
+    const chart2 = chartContainer2.append('g');
+
+    chart2.append('g')
+         .call(d3.axisBottom(x2).tickSizeOuter(0))
+         .attr('transform', `translate(0, ${CHART_HEIGHT})`)
+         .attr('color', '#000000');
+
+        chart2.selectAll('.bar')
+         .data(NEXT_DATA, data => data.id)
+         .enter()
+         .append('rect')
+         .classed('bar', true)
+         .attr('width', x2.bandwidth())
+         .attr('height', data => CHART_HEIGHT - y2(data.value))
+         .attr('x', (data) => x2(data.region))
+         .attr('y', (data) => y2(data.value));
+
+        chart2.selectAll('.label')
+            .data(NEXT_DATA, data => data.id)
+            .enter()
+            .append('text')
+            .text(data => data.value)
+            .attr('x', data => x2(data.region) + x2.bandwidth() / 2)
+            .attr('y', data => y2(data.value) - 20)
+            .attr('text-anchor', 'middle')
+            .classed('label', true);
         
-    listItems.append('span').text(data => data.region);
-    listItems.append('input')
-             .attr('type', 'checkbox')
-             .attr('checked', true)
-             .on('change', (data) => {
-                if (unselectedIds.indexOf(data.id) === -1) {
-                    unselectedIds.push(data.id);
-                } else {
-                    unselectedIds = unselectedIds.filter(id => id !== data.id);
-                }
-                selectedData = TEST_DATA.filter(
-                    (d) => unselectedIds.indexOf(d.id) === -1
-                );
-                renderChart();
-             });
-     
-
+    
     let colors = d3.scaleOrdinal(d3.schemeDark2);
-    let svg = d3.select('#pie').append('svg')
+    let svg = d3.select('#pie')
+                .append('svg')
                 .attr('width', 600)
                 .attr('height', 500)
                 .style('background', 'grey');

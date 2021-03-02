@@ -4,5 +4,12 @@
       { "id":"d2" , "value":11, "region":"India" },
       { "id":"d3" , "value":12, "region":"China" },
       { "id":"d4" , "value":6, "region":"Germany" }
+   ],
+
+   "nextdata": [
+      { "id":"d1" , "value":1, "region":"Spain" },
+      { "id":"d2" , "value":4, "region":"Russia" },
+      { "id":"d3" , "value":10, "region":"Africa" },
+      { "id":"d4" , "value":12, "region":"Switzerland" }
    ]
 }
