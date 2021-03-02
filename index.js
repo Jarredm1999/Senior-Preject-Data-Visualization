@@ -90,7 +90,44 @@ document.addEventListener('DOMContentLoaded', function(e) {
                 );
                 renderChart();
              });
-        
+     
+
+    let colors = d3.scaleOrdinal(d3.schemeDark2);
+    let svg = d3.select('#pie').append('svg')
+                .attr('width', 600)
+                .attr('height', 500)
+                .style('background', 'grey');
+    
+    let pieData = d3.pie().sort(null).value(function(d){return d.value})(TEST_DATA);
+    console.log(pieData);
+    let segments = d3.arc()
+                     .innerRadius(0)
+                     .outerRadius(200)
+                     .padAngle(.05)
+                     .padRadius(50);
+    let sections = svg.append('g')
+                     .attr('transform', 'translate(225, 250)')
+                     .selectAll('path').data(pieData);
+    sections.enter().append('path')
+            .attr('d', segments)
+            .attr('fill', function(d) {
+                return colors(d.value);
+            });
+
+    let legends = svg.append('g').attr('transform', 'translate(450, 100)')
+                    .selectAll('legends').data(pieData);
+    let legend = legends.enter().append('g').classed('legends', true)
+                        .attr('transform', function(d, i) {
+                            return "translate(0," + (i + 1)*30 + ")"; 
+                        });
+    legend.append('rect').attr('width', 20).attr('height', 20)
+          .attr('fill', function(d) {
+                return colors(d.value);
+            });
+    legend.append('text').text(function(d){return d.data.region + " {" + d.data.value + "}";})
+          .attr('fill', 'black')
+          .attr('x', 35)
+          .attr('y', 15);
 
     });
 });
