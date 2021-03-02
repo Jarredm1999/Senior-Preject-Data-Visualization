@@ -6,6 +6,12 @@ html {
     display: flex;
 }
 
+p {
+   font-family: 'Abel';
+   font-size: 22px;
+   font-weight: bold;
+}
+
 .container {
     border: 1px solid rgb(4, 247, 85);
 }
@@ -21,6 +27,14 @@ html {
 #barchart {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
     padding: 1rem;
+}
+
+#piechart {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    padding: 1rem;
+}
+
+#chartcontainer {
     display: flex;
 }
 
@@ -48,5 +62,5 @@ html {
 }
 
 #spacing {
-    padding: 1rem;
+    padding-top: 1rem;
 }

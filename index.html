@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Example Data-visualizer</title>
     <link rel="stylesheet" href="index.css">
+    <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet'>
     <script src="http://d3js.org/d3.v5.min.js"></script>
     <script src="https://d3js.org/d3-scale.v3.min.js"></script>
     <script src="https://d3js.org/d3-axis.v2.min.js"></script>
@@ -13,14 +14,22 @@
 <body>
     <div id="app">
         <div id="barchart">
-            <div id="chart">
-                <svg></svg>
+            <div id="textcontainer">
+                <p>Country Bar Charts</p>
             </div>
-            <div id="chart2"></div>
+            <div id="chartcontainer">
+                <div id="chart">
+                    <svg></svg>
+                </div>
+                <div id="chart2"></div>
+            </div>
         </div>
     </div>
-    <div id="spacing">
-        <div id="pie" style="height: 500px; width: 600px;"></div>
+    <div id="piechart" style="width: 650px;"> 
+        <div id="spacing">
+            <div><p>Country Pie Chart</p></div>
+            <div id="pie" style="height: 500px; width: 600px;"></div>
+        </div>
     </div>
 </body>
 </html>
