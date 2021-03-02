@@ -1,9 +1,50 @@
+html {
+    font-family: sans-serif;
+}
+
+#app {
+    display: flex;
+}
+
 .container {
-    width: 250px;
-    height: 200px;
     border: 1px solid rgb(4, 247, 85);
 }
 
 .bar {
+    fill: rgb(4, 247, 85);
+}
+
+.label {
+    fill: rgb(15, 15, 15);
+}
+
+#chart {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    padding: 1rem;
+}
+
+#chart,
+#data {
+    margin: 0 2rem;
+}
+
+#data ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#data li {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    width: 10rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}
+
+.axis {
     fill: rgb(4, 247, 85);
 }

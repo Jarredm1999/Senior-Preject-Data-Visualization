@@ -13,28 +13,84 @@ document.addEventListener('DOMContentLoaded', function(e) {
         TEST_DATA = JSON.parse(JSON.stringify(data.data));
         console.log(TEST_DATA);
 
-        const xScale = d3.scaleBand()
-            .domain(TEST_DATA.map((dataPoint) => dataPoint.region))
-            .rangeRound([0, 250])
-            .padding(0.1);
+    const MARGINS = {top: 20, bottom: 10};
+    const CHART_WIDTH = 600;
+    const CHART_HEIGHT = 400 - MARGINS.top - MARGINS.bottom;
 
-        const yScale = d3.scaleLinear()
-            .domain([0, 15])
-            .range([200, 0]);
+    let selectedData = TEST_DATA;
+
+    const x = d3.scaleBand().rangeRound([0, CHART_WIDTH]).padding(0.1);
+    const y = d3.scaleLinear().range([CHART_HEIGHT, 0]);
+
+    const chartContainer = d3.select('svg')
+        .attr('width', CHART_WIDTH)
+        .attr('height', CHART_HEIGHT + MARGINS.top + MARGINS.bottom);
+
+    x.domain(TEST_DATA.map((d) => d.region));
+    y.domain([0, d3.max(TEST_DATA, d => d.value) + 3]);
 
 
-        const container = d3.select('svg')
-            .classed('container', true);//uses an css element
+    const chart = chartContainer.append('g');
 
-        const bars = container
-        .selectAll('.bar')
-        .data(TEST_DATA)
-        .enter()
-        .append('rect')
-        .classed('bar', true)
-        .attr('width', xScale.bandwidth())
-        .attr('height', data => 200 - yScale(data.value))
-        .attr('x', data => xScale(data.region))
-        .attr('y', data => yScale(data.value));
+    chart.append('g')
+         .call(d3.axisBottom(x).tickSizeOuter(0))
+         .attr('transform', `translate(0, ${CHART_HEIGHT})`)
+         .attr('color', '#000000');
+
+
+    function renderChart() {
+        chart.selectAll('.bar')
+         .data(selectedData, data => data.id)
+         .enter()
+         .append('rect')
+         .classed('bar', true)
+         .attr('width', x.bandwidth())
+         .attr('height', data => CHART_HEIGHT - y(data.value))
+         .attr('x', (data) => x(data.region))
+         .attr('y', (data) => y(data.value));
+
+        chart.selectAll('.bar').data(selectedData, data => data.id).exit().remove();
+
+        chart.selectAll('.label')
+            .data(selectedData, data => data.id)
+            .enter()
+            .append('text')
+            .text(data => data.value)
+            .attr('x', data => x(data.region) + x.bandwidth() / 2)
+            .attr('y', data => y(data.value) - 20)
+            .attr('text-anchor', 'middle')
+            .classed('label', true);
+
+        chart.selectAll('.label').data(selectedData, data => data.id).exit().remove();
+    }
+
+    renderChart();
+
+    let unselectedIds = [];
+
+    const listItems = d3.select('#data')
+                        .select('ul')
+                        .selectAll('li')
+                        .data(TEST_DATA)
+                        .enter()
+                        .append('li');
+        
+    listItems.append('span').text(data => data.region);
+    listItems.append('input')
+             .attr('type', 'checkbox')
+             .attr('checked', true)
+             .on('change', (data) => {
+                if (unselectedIds.indexOf(data.id) === -1) {
+                    unselectedIds.push(data.id);
+                } else {
+                    unselectedIds = unselectedIds.filter(id => id !== data.id);
+                }
+                selectedData = TEST_DATA.filter(
+                    (d) => unselectedIds.indexOf(d.id) === -1
+                );
+                renderChart();
+             });
+        
+
     });
 });
