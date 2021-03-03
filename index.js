@@ -144,47 +144,76 @@ document.addEventListener('DOMContentLoaded', function(e) {
           .attr('x', 35)
           .attr('y', 15);
     
+    let margin = {top: 20, right: 40, bottom: 30, left: 50},
+        width = 960 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
 
-    let n = 21;
+    let parseTime = d3.timeParse('%Y');
 
-    let margin = {top: 50, right: 50, bottom: 50, left: 50}
-      , width = 900 - margin.left - margin.right
-      , height = 350 - margin.top - margin.bottom;
-    
-    let xScale = d3.scaleLinear()
-            .domain([0, n-1])
-            .range([0, width]);
+    let x3 = d3.scaleTime().range([0, width]);
+    let y3 = d3.scaleLinear().range([height, 0]);
 
-    let yScale = d3.scaleLinear()
-            .domain([0, 1])
-            .range([height, 0]);
+    let valueline = d3.line()
+            .x(function(d) { return x3(d.date); })
+            .y(function(d) { return y3(d.value); });
 
-    let line = d3.line()
-            .x(function(d, i) {return xScale(i);})
-            .y(function(d) {return yScale(d.y);})
-            .curve(d3.curveMonotoneX)
-    
-    var dataset = d3.range(n).map(function(d) { return {"y": d3.randomUniform(1)() } })
-
-    let svg2 = d3.select('#lnchrt')
-            .append('svg')
-            .attr('width', width + margin.left + margin.right)
+    let svg2 = d3.select('#lnchrt').append('svg')
+            .attr('width', width + margin.left + margin.right + 400)
             .attr('height', height + margin.top + margin.bottom)
             .append('g')
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-    
-    svg2.append('g')
-        .attr('class', 'x axis')
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(xScale));
+            .attr("transform", "translate(" + 275 + "," + margin.top + ")");
 
-    svg2.append("g")
-       .attr("class", "y axis")
-       .call(d3.axisLeft(yScale));
+    let label = d3.select('.label');
+
+    function draw(data, option) {
+        data = data[option];
+
+        data.forEach(function(d) {
+            d.date = parseTime(d.date);
+            d.value = +d.value;
+        });
+
+        data.sort(function(a, b) {
+            return a["date"]-b["date"];
+        });
+
+        x3.domain(d3.extent(data, function(d) {return d.date; }));
+        y3.domain([0, d3.max(data, function(d) {
+            return Math.max(d.value)
+        })]);
+
+        svg2.append('path')
+            .data([data])
+            .attr('class', 'line')
+            .attr('d', valueline);
+
+        svg2.append('g')
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x3));
+        
+        svg2.append('g')
+            .call(d3.axisLeft(y3));
+        
+        svg2.selectAll("circle")
+		.data(data)
+		.enter()
+		.append("circle")
+		.attr("r", 5)
+	    .attr("cx", function(d) {
+	        return x3(d.date)
+	    })
+	    .attr("cy", function(d) {
+	        return y3(d.value)
+	    });
+    }
+
+    d3.json('test.json').then(function(data) {
+        draw(data, "linedata");
+    })
+    .catch(function(error) {
+        console.log(error)  
+    });
+
     
-    svg2.append('path')
-        .datum(dataset)
-        .attr('class', 'line')
-        .attr('d', line);
     });
 });
