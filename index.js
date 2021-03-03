@@ -158,10 +158,10 @@ document.addEventListener('DOMContentLoaded', function(e) {
             .y(function(d) { return y3(d.value); });
 
     let svg2 = d3.select('#lnchrt').append('svg')
-            .attr('width', width + margin.left + margin.right + 400)
-            .attr('height', height + margin.top + margin.bottom)
+            .attr('width', width + margin.left + margin.right)
+            .attr('height', height + margin.top + margin.bottom + 25)
             .append('g')
-            .attr("transform", "translate(" + 275 + "," + margin.top + ")");
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     let label = d3.select('.label');
 
@@ -190,9 +190,23 @@ document.addEventListener('DOMContentLoaded', function(e) {
         svg2.append('g')
             .attr("transform", "translate(0," + height + ")")
             .call(d3.axisBottom(x3));
+
+        svg2.append("text")             
+            .attr("transform", "translate(" + (width/2) + " ," + (height + margin.top + 20) + ")")
+            .style("text-anchor", "middle")
+            .text("Year");
         
         svg2.append('g')
             .call(d3.axisLeft(y3));
+        
+        svg2.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 0 - margin.left)
+            .attr("x",0 - (height / 2))
+            .attr("dy", "1em")
+            .style("text-anchor", "middle")
+            .text("Value");      
+
         
         svg2.selectAll("circle")
 		.data(data)
