@@ -6,18 +6,23 @@ document.addEventListener('DOMContentLoaded', function(e) {
      
     let TEST_DATA;
     let NEXT_DATA;
+    let LINE_DATA;
 
     fetch("test.json")
     .then(response => response.json())
-    .then(data => { 
+    .then(data => {
         console.log("1st dataset");
         console.log(data.data);
         console.log("2nd dataset");
         console.log(data.nextdata);
+        console.log("3rd dataset");
+        console.log(data.linedata);
         TEST_DATA = JSON.parse(JSON.stringify(data.data));
         console.log(TEST_DATA);
         NEXT_DATA = JSON.parse(JSON.stringify(data.nextdata));
         console.log(NEXT_DATA);
+        LINE_DATA = JSON.parse(JSON.stringify(data.linedata));
+        console.log(LINE_DATA);
 
     const MARGINS = {top: 20, bottom: 10};
     const CHART_WIDTH = 600;
@@ -138,6 +143,48 @@ document.addEventListener('DOMContentLoaded', function(e) {
           .attr('fill', 'black')
           .attr('x', 35)
           .attr('y', 15);
+    
 
+    let n = 21;
+
+    let margin = {top: 50, right: 50, bottom: 50, left: 50}
+      , width = 900 - margin.left - margin.right
+      , height = 350 - margin.top - margin.bottom;
+    
+    let xScale = d3.scaleLinear()
+            .domain([0, n-1])
+            .range([0, width]);
+
+    let yScale = d3.scaleLinear()
+            .domain([0, 1])
+            .range([height, 0]);
+
+    let line = d3.line()
+            .x(function(d, i) {return xScale(i);})
+            .y(function(d) {return yScale(d.y);})
+            .curve(d3.curveMonotoneX)
+    
+    var dataset = d3.range(n).map(function(d) { return {"y": d3.randomUniform(1)() } })
+
+    let svg2 = d3.select('#lnchrt')
+            .append('svg')
+            .attr('width', width + margin.left + margin.right)
+            .attr('height', height + margin.top + margin.bottom)
+            .append('g')
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    
+    svg2.append('g')
+        .attr('class', 'x axis')
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(xScale));
+
+    svg2.append("g")
+       .attr("class", "y axis")
+       .call(d3.axisLeft(yScale));
+    
+    svg2.append('path')
+        .datum(dataset)
+        .attr('class', 'line')
+        .attr('d', line);
     });
 });
