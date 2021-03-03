@@ -6,10 +6,20 @@ body {
     background-color: rgb(115, 109, 124);
 }
 
+#all {
+    text-align: center;
+}
+
 .line {
   fill: none;
   stroke: rgb(241, 3, 3);
   stroke-width: 5px;
+}
+
+#plots {
+    display: flex;
+    position: absolute;
+    left: 90px;
 }
 
 #linegraph {
@@ -19,6 +29,7 @@ body {
 
 #lngraphcontainer {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    background-color: seashell;
     padding: 1rem;
 }
 
@@ -26,6 +37,9 @@ body {
     display: flex;
     padding-bottom: 1rem;
     padding-top: 1rem;
+    position: absolute;
+    top: 770px;
+    left: 105px;
 }
 
 p {
@@ -62,6 +76,9 @@ h1 {
 #piechart {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
     padding: 1rem;
+    position: absolute;
+    top: 1340px;
+    left: 425px;
 }
 
 #chartcontainer {
@@ -92,4 +109,21 @@ h1 {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
     background-color: seashell;
     padding: 1rem;
+}
+
+circle {
+    cursor: pointer;
+    fill: rgb(15, 15, 15);
+}
+
+#scpcontainer {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    padding: 1rem;
+}
+
+#scp {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    background-color: seashell;
+    padding: 1rem;
+
 }

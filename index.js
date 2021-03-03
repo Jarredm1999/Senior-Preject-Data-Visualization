@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 //-----------------------This is the code for the line graph--------------------------------
 //Setup new margin values to accommodate for the increased size
     let margin = {top: 20, right: 40, bottom: 30, left: 50},
-        width = 960 - margin.left - margin.right,
+        width = 600 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
 //Parses the time data
     let parseTime = d3.timeParse('%Y');
@@ -233,7 +233,78 @@ document.addEventListener('DOMContentLoaded', function(e) {
     .catch(function(error) {
         console.log(error)  
     });
+//--------------------------This is the code for the scatter plot---------------------------
+//Parses the time data
+    let parseTime2 = d3.timeParse('%Y');
+//Setup new x and y variables for the new chart
+    let x4 = d3.scaleTime().range([0, width]);
+    let y4 = d3.scaleLinear().range([height, 0]);
+//Selects the html element with "scp" as the id and sets the height, width
+//and translates it to the correct position.
+    let svg3 = d3.select('#scp').append('svg')
+            .attr('width', width + margin.left + margin.right)
+            .attr('height', height + margin.top + margin.bottom + 25)
+            .append('g')
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+//Function to draw the graph
+    function draw2(data, option) {
+        data = data[option];
+//Parse Json data
+        data.forEach(function(d) {
+            d.date = parseTime2(d.date);
+            d.value = +d.value;
+        });
+//Sorts the data incase the years are out of order
+        data.sort(function(a, b) {
+            return a["date"]-b["date"];
+        });
+//Sets the domain of the x and y variable the largest date and value
+        x4.domain(d3.extent(data, function(d) {return d.date; }));
+        y4.domain([0, d3.max(data, function(d) {
+            return Math.max(d.value)
+        })]);
+//Setup the x axis
+        svg3.append('g')
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x4));
+//Text label for the x axis
+        svg3.append("text")             
+            .attr("transform", "translate(" + (width/2) + " ," + (height + margin.top + 20) + ")")
+            .style("text-anchor", "middle")
+            .text("Year");
+//Sets up the y axis
+        svg3.append('g')
+            .call(d3.axisLeft(y4));
+//Text label for the y axis and positions it in the correct spot        
+        svg3.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 0 - margin.left)
+            .attr("x",0 - (height / 2))
+            .attr("dy", "1em")
+            .style("text-anchor", "middle")
+            .text("Value");      
+//Plots a circle at each point
+        let label2 = d3.select(".label");
+        svg3.selectAll("circle")
+		.data(data)
+		.enter()
+		.append("circle")
+		.attr("r", 5)
+	    .attr("cx", function(d) {
+	        return x4(d.date)
+	    })
+	    .attr("cy", function(d) {
+	        return y4(d.value)
+	    });
+    }
+//Json request and calls the draw function. This enables us to be able to draw more then
+//line on the line graph.
+    d3.json('test.json').then(function(data) {
+        draw2(data, "scpdata");
+    })
+    .catch(function(error) {
+        console.log(error)  
+    });
 
-    
     });
 });

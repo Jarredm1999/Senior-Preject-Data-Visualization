@@ -13,31 +13,45 @@
 </head>
 <body>
     <h1>TSU COVID-19 Twitter Data-Visualizer</h1>
-     <div id="linegraph" style="width: 990px;">
-        <div id="ltextcontainer">
-            <p id="line">Country Line Graph</p>
-        </div>
-        <div id="lngraphcontainer" style="width: 960px;">
-            <div id="lnchrt"></div>
-        </div>
-    </div>
-    <div id="app">
-        <div id="barchart">
-            <div id="textcontainer">
-                <p>Country Bar Charts</p>
-            </div>
-            <div id="chartcontainer">
-                <div id="chart">
-                    <svg></svg>
+    <div id="all">
+        <div id="plots">
+            <div id="linegraph" style="width: 630px;">
+                <div id="ltextcontainer">
+                    <p id="line">Country Line Graph</p>
                 </div>
-                <div id="chart2"></div>
+                <div id="lngraphcontainer" style="width: 600px;">
+                    <div id="lnchrt"></div>
+                </div>
+            </div>
+            <div style="width: 15px;"></div>
+            <div id="scpcontainer" style="width: 630px;">
+            <div id="scpspacing">
+                <div><p>Time Scatter Plot</p></div>
+                <div id="scp" style="width: 600px;">
+                    <p class="label"></p>
+                </div>
             </div>
         </div>
-    </div>
-    <div id="piechart" style="width: 632px;"> 
-        <div id="spacing">
-            <div><p>Country Pie Chart</p></div>
-            <div id="pie" style="height: 500px; width: 600px;"></div>
+        </div>
+        <div id="app">
+            <div id="barchart">
+                <div id="textcontainer">
+                    <p>Country Bar Charts</p>
+                </div>
+                <div id="chartcontainer">
+                    <div id="chart">
+                        <svg></svg>
+                    </div>
+                    <div style="width: 15px;"></div>
+                    <div id="chart2"></div>
+                </div>
+            </div>
+        </div>
+        <div id="piechart" style="width: 632px;"> 
+            <div id="spacing">
+                <div><p>Country Pie Chart</p></div>
+                <div id="pie" style="height: 500px; width: 600px;"></div>
+            </div>
         </div>
     </div>
 </body>
