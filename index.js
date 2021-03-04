@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
     let TEST_DATA;
     let NEXT_DATA;
     let LINE_DATA;
+    let SCAT_DATA;
 //reading the json file.
     fetch("test.json")
     .then(response => response.json())
@@ -18,12 +19,16 @@ document.addEventListener('DOMContentLoaded', function(e) {
         console.log(data.nextdata);
         console.log("3rd dataset");
         console.log(data.linedata);
+        console.log("4th dataset");
+        console.log(data.scpdata);
         TEST_DATA = JSON.parse(JSON.stringify(data.data));
         console.log(TEST_DATA);
         NEXT_DATA = JSON.parse(JSON.stringify(data.nextdata));
         console.log(NEXT_DATA);
         LINE_DATA = JSON.parse(JSON.stringify(data.linedata));
         console.log(LINE_DATA);
+        SCAT_DATA = JSON.parse(JSON.stringify(data.scpdata));
+        console.log(SCAT_DATA);
 
 //--------------------This is the code for both bar charts----------------------------------
     const MARGINS = {top: 20, bottom: 10};
