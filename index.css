@@ -33,7 +33,7 @@ body {
     padding: 1rem;
 }
 
-#app {
+#barchartcontainer {
     display: flex;
     padding-bottom: 1rem;
     padding-top: 1rem;
