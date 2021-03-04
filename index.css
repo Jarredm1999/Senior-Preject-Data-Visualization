@@ -13,7 +13,7 @@ body {
 .line {
   fill: none;
   stroke: rgb(241, 3, 3);
-  stroke-width: 5px;
+  stroke-width: 1.5px;
 }
 
 #plots {
@@ -43,15 +43,20 @@ body {
 }
 
 p {
+   margin-top: 0px;
+   margin-bottom: 16px;
    font-family: 'Abel';
-   font-size: 22px;
+   font-size: 30px;
    font-weight: bold;
    color:seashell;
 }
 
-h1 {
+#tsu {
    text-align: center;
+   margin-top: 15px;
+   margin-bottom: 15px;
    font-family: 'Abel';
+   font-size: 52px;
    font-weight: bold;
    color:seashell;
 }
@@ -113,7 +118,8 @@ h1 {
 
 circle {
     cursor: pointer;
-    fill: rgb(15, 15, 15);
+    fill: rgb(247, 2, 2);
+    opacity: .5;
 }
 
 #scpcontainer {

@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
             .style("text-anchor", "middle")
             .text("Value");      
 //Plots a circle at each point
-        svg2.selectAll("circle")
+        /*svg2.selectAll("circle")
 		.data(data)
 		.enter()
 		.append("circle")
@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 	    })
 	    .attr("cy", function(d) {
 	        return y3(d.value)
-	    });
+	    });*/
     }
 //Json request and calls the draw function. This enables us to be able to draw more then
 //line on the line graph.
@@ -284,7 +284,6 @@ document.addEventListener('DOMContentLoaded', function(e) {
             .style("text-anchor", "middle")
             .text("Value");      
 //Plots a circle at each point
-        let label2 = d3.select(".label");
         svg3.selectAll("circle")
 		.data(data)
 		.enter()
