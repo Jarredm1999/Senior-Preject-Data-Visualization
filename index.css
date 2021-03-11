@@ -18,8 +18,7 @@ body {
 
 #plots {
     display: flex;
-    position: absolute;
-    left: 90px;
+    justify-content: center;
 }
 
 #linegraph {
@@ -37,9 +36,8 @@ body {
     display: flex;
     padding-bottom: 1rem;
     padding-top: 1rem;
-    position: absolute;
-    top: 770px;
-    left: 105px;
+    margin-top: 25px;
+    justify-content: center;
 }
 
 p {
@@ -81,9 +79,12 @@ p {
 #piechart {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
     padding: 1rem;
-    position: absolute;
-    top: 1340px;
-    left: 425px;
+}
+
+#piechartcontainer {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
 }
 
 #chartcontainer {
