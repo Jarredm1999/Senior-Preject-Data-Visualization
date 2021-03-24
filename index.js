@@ -3,6 +3,24 @@
 //If you do not you will get an error saying "Fetch API cannot load...URL
 //scheme must be http or https for CORS request".
 
+var tabButtons=document.querySelectorAll(".tabContainer .buttonContainer button");
+var tabPanels=document.querySelectorAll(".tabContainer .tabPanel");
+
+function showPanel(panelIndex, colorCode) {
+    tabButtons.forEach(function(node) {
+        node.style.backgroundColor="";
+        node.style.color="";
+    });
+    tabButtons[panelIndex].style.backgroundColor=colorCode;
+    tabButtons[panelIndex].style.color="white";
+    tabPanels.forEach(function(node) {
+        node.style.display="none";
+    });
+    tabPanels[panelIndex].style.display="block";
+    tabPanels[panelIndex].style.backgroundColor=colorCode;
+}
+showPanel(0, '#d3d3d3');
+
 document.addEventListener('DOMContentLoaded', function(e) {
 //Storing the different types of data from the json into variables. 
     let TEST_DATA;
@@ -29,6 +47,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
         console.log(LINE_DATA);
         SCAT_DATA = JSON.parse(JSON.stringify(data.scpdata));
         console.log(SCAT_DATA);
+
 
 //--------------------This is the code for both bar charts----------------------------------
     const MARGINS = {top: 20, bottom: 10};

@@ -1,12 +1,51 @@
 html {
-    font-family: sans-serif;
+    font-family: 'Abel';
 }
 
 body {
     background-color: rgb(115, 109, 124);
 }
 
-#all {
+.tabContainer {
+    width: 100%;
+    height: 100%;
+}
+
+.tabContainer .buttonContainer{
+    height: 15%;
+    padding-bottom: 43px;
+}
+
+.tabContainer .buttonContainer button{
+    width: 25%;
+    height:100%;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 10px;
+    font-family: 'Abel';;
+    font-size: 18px;
+    background-color: #eee;
+}
+
+.tabContainer .buttonContainer button:hover{
+    background-color: #d7d4d4;
+}
+
+.tabContainer .tabPanel{
+    height: 85%;
+    background-color: gray;
+    color: white;
+    text-align: center;
+    padding-top: 75px;
+    box-sizing: border-box;
+    font-family: 'Abel';
+    font-size: 22px;
+    display: none;
+}
+
+.all {
     text-align: center;
 }
 
