@@ -13,7 +13,7 @@ body {
 
 .tabContainer .buttonContainer{
     height: 15%;
-    padding-bottom: 43px;
+    padding-bottom: 48px;
 }
 
 .tabContainer .buttonContainer button{
@@ -25,8 +25,10 @@ body {
     cursor: pointer;
     padding: 10px;
     font-family: 'Abel';;
-    font-size: 18px;
+    font-size: 22px;
     background-color: #eee;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
 }
 
 .tabContainer .buttonContainer button:hover{
@@ -38,7 +40,7 @@ body {
     background-color: gray;
     color: white;
     text-align: center;
-    padding-top: 75px;
+    padding-top: 50px;
     box-sizing: border-box;
     font-family: 'Abel';
     font-size: 22px;
